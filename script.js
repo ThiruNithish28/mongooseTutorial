@@ -1,45 +1,49 @@
 const mongoose = require("mongoose");
 
-const user = require("./models/userModel"); // import the models
-const UpdateUser = require("./models/updateUser");
+const User = require("./models/userModel"); // Import the user model
+const UpdateUser = require("./models/updateUser"); // Import the updateUser model
 
-//we have to connet the mongodb using connnection String
+// Connect to MongoDB using the connection string
 /**
- * where do we get Connection String ?
- * There are 2 ways to get (mogoDB shell, mongoDb Compass)
- * If you use shell open terminal -> type mongosh-> here you can find
- * If you use MongoDb compass open the app-> see New Collection -> there you get ConnetctionString
+ * Where do we get the Connection String?
+ * There are 2 ways to find it (via MongoDB Shell or MongoDB Compass):
+ * 1. MongoDB Shell: Open your terminal and type `mongosh` -> The connection string will be displayed there.
+ * 2. MongoDB Compass: Open the app -> Navigate to your desired database -> Find the connection string under "Connect".
  */
 
-// to connect use connect() note: while entering the connection string mention the name of the DB also
+// Use mongoose's `connect()` method to connect to MongoDB
+// Note: While entering the connection string, include the database name as well.
 mongoose
   .connect("mongodb://localhost:27017/tutorial")
-  .then(() => console.log("connected ...."))
-  .catch((err) => console.log(err));
+  .then(() => console.log("Connected to MongoDB..."))
+  .catch((err) => console.log("Connection error:", err));
 
-// to check the where it is connected we have use .then() it has as parameter of call back funtcionIf the connection succesfully finsihed then will be run other wise .catch() will run. Which has parameter error
+// `connect()` returns a promise. If the connection is successful, the `.then()` callback is executed.
+// Otherwise, `.catch()` will handle the error.
 
-// as second step we have to create a scheme in seprate file in folder "module".
+// Step 2: Create a schema in a separate file inside the "models" folder.
 
-/**after create schema we have to import it (which you can see in the top line).
- * And before store to database we have to  create data "user"
- * by using save() method we can store data in DB
- * save() is a promise so we have then and catch function also
+/**
+ * After creating the schema, we need to import it (as shown at the top).
+ * To store data in the database, create a new instance of the model and use the `save()` method.
+ * The `save()` method is a promise, so you can chain `.then()` and `.catch()` to handle success or errors.
  */
 
+// Example: Creating a user instance and saving it to the database
 // const user = new User({ name: "Thiru", age: 20 });
 // user
 //   .save()
 //   .then(() => {
-//     console.log("save the data");
+//     console.log("Data saved successfully.");
 //   })
-//   .catch((err) => console.log(err.message));
+//   .catch((err) => console.log("Error saving data:", err.message));
 
-const updateUser = new UpdateUser({name:"Mohan", age:20, email:"Mohan@gmail.com"})
-   .save()
-   .then(()=> console.log("successFully save the data"))
-   .catch(err => console.log(err.message));
+// Example: Creating and saving an updated user
+const updateUser = new UpdateUser({ name: "Mohan", age: 20, email: "Mohan@gmail.com" });
+updateUser
+  .save()
+  .then(() => console.log("Data saved successfully."))
+  .catch((err) => console.log("Error saving data:", err.message));
 
-    
-// NOTeE : In the above we use the old method , we have the update new and esay way and style 
-// to now the update and new style of wirting check out  "UpdateScript.js" file.
+// NOTE: The above example uses the old method of writing Mongoose queries.
+// For the updated and modern syntax, refer to the "UpdateScript.js" file.

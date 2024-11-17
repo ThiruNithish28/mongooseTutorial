@@ -1,21 +1,24 @@
-//first we connect with mongoose
+// First, import mongoose to connect to MongoDB
+const mongoose = require("mongoose");
 
-const mongoose = require('mongoose'); 
+// Next, define a schema for the user collection
+const userSchema = new mongoose.Schema({
+    name: String,
+    age: Number
+}); 
+// The `Schema()` function accepts an object as a parameter to define the structure of the documents.
+// It returns a schema object that we can use to define a model.
 
-//next we create a schemea
-
-const userSchema =  new mongoose.Schema({
-    name:String,
-    age:Number
-}); // the Schema() function has object and return the object
 /*
-// now we create a model 
-const userModel = mongoose.model("User",userSchema);
-// where in this model() have name and schema as 2 parameter
+// To create a model, we use the `mongoose.model()` function.
+const userModel = mongoose.model("User", userSchema);
+// The `model()` function requires two parameters:
+// 1. The name of the collection (e.g., "User").
+// 2. The schema to be used for the collection (e.g., `userSchema`).
 
-// now we have to export it so
-module.exports = userModel; // now we can use it in external file 
-
+// Finally, export the model to use it in other files.
+module.exports = userModel;
 */
-module.exports = mongoose.model("User",userSchema);
 
+// Alternatively, you can directly export the model as shown below:
+module.exports = mongoose.model("User", userSchema);
